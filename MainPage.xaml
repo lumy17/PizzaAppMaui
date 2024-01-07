@@ -6,6 +6,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Pizzas" Clicked="OnNavigateToPizzaPageClicked" />
         <ToolbarItem Text="Ingredients" Clicked="OnNavigateToIngredientPageClicked" />
+        <ToolbarItem Text="Orders" Clicked="OnNavigateToOrdersPageClicked" />
     </ContentPage.ToolbarItems>
 
     <ScrollView>
@@ -36,6 +37,11 @@
                 x:Name="NavigateToIngredientsListPageBtn"
                 Text="Go to Ingredients List Page"
                 Clicked="OnNavigateToIngredientsListPageClicked"
+                HorizontalOptions="Center" />
+            <Button
+                x:Name="NavigateToOrdersListPageBtn"
+                Text="Go to Orders List Page"
+                Clicked="OnNavigateToOrdersListPageClicked"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>

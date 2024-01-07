@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaAppMaui.OrdersListPage"
+             Title="Orders List">
+
+    <StackLayout Orientation="Vertical" Padding="10">
+        <Button Text="Back" Clicked="OnBackButtonClicked" />
+        <ListView x:Name="ordersListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding Date, StringFormat='Date: {0:dd/MM/yyyy}'}" FontAttributes="Bold" />
+                            <Label Text="{Binding Street, StringFormat='Street: {0}'}" />
+                            <Label Text="{Binding Number, StringFormat='Number: {0}'}" />
+                            <Label Text="{Binding Apartment, StringFormat='Apartment: {0}'}" />
+                            <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
+
+                            <!-- Delete Button -->
+                            <Button Text="Delete" Clicked="OnDeleteOrderClicked" CommandParameter="{Binding .}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

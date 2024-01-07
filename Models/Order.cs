@@ -17,38 +17,31 @@ namespace PizzaAppMaui.Models
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<PizzaOrder> PizzaOrders { get; set; }
 
-        [ForeignKey(typeof(Cupon))]
-        public int? CuponId { get; set; }
-
-        [ManyToOne]
-        public Cupon Cupon { get; set; }
-
-        [ForeignKey(typeof(Member))]
-        public int MemberId { get; set; }
-
-        [ManyToOne]
-        public Member Member { get; set; }
-
         public float CalculateFinalPrice()
         {
             float finalPrice = 0;
-            foreach(var pizzaOrder in PizzaOrders)
+            if (PizzaOrders != null)
             {
-                finalPrice += pizzaOrder.Pizza.BasePrice;
-                if(pizzaOrder.Pizza.PizzaIngredients != null)
+                foreach (var pizzaOrder in PizzaOrders)
                 {
-                    foreach(var ingredient in pizzaOrder.Pizza.PizzaIngredients)
+                    if (pizzaOrder?.Pizza != null)
                     {
-                        finalPrice += ingredient.Ingredient.Price;
+                        finalPrice += pizzaOrder.Pizza.BasePrice;
+                        if (pizzaOrder.Pizza.PizzaIngredients != null)
+                        {
+                            foreach (var pizzaIngredient in pizzaOrder.Pizza.PizzaIngredients)
+                            {
+                                if (pizzaIngredient?.Ingredient != null)
+                                {
+                                    finalPrice += pizzaIngredient.Ingredient.Price;
+                                }
+                            }
+                        }
                     }
                 }
             }
-            if (Cupon != null && Cupon.StartDate <= DateTime.Now && Cupon.EndDate >= DateTime.Now)
-            {
-                finalPrice = finalPrice - Cupon.Value * finalPrice;
-            }
-
             return finalPrice;
         }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace PizzaAppMaui
+﻿using PizzaAppMaui.Models;
+
+namespace PizzaAppMaui
 {
     public partial class MainPage : ContentPage
     {
@@ -23,6 +25,14 @@
         private async void OnNavigateToIngredientsListPageClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new IngredientsListPage());
+        }
+        private async void OnNavigateToOrdersPageClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new OrdersPage());
+        }
+        private async void OnNavigateToOrdersListPageClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new OrdersListPage());
         }
     }
 }

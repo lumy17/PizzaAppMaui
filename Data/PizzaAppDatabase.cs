@@ -11,9 +11,7 @@ namespace PizzaAppMaui.Data
         public PizzaAppMauiDatabase(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<Cupon>().Wait();
             _database.CreateTableAsync<Ingredient>().Wait();
-            _database.CreateTableAsync<Member>().Wait();
             _database.CreateTableAsync<Order>().Wait();
             _database.CreateTableAsync<Pizza>().Wait();
             _database.CreateTableAsync<PizzaIngredient>().Wait();
@@ -30,11 +28,6 @@ namespace PizzaAppMaui.Data
             // Delete all records from the Pizza table
             await _database.ExecuteAsync("DELETE FROM Ingredient");
         }
-        // Cupon methods
-        public Task<List<Cupon>> GetCuponsAsync() => _database.Table<Cupon>().ToListAsync();
-        public Task<Cupon> GetCuponAsync(int id) => _database.Table<Cupon>().Where(i => i.Id == id).FirstOrDefaultAsync();
-        public Task<int> SaveCuponAsync(Cupon cupon) => cupon.Id != 0 ? _database.UpdateAsync(cupon) : _database.InsertAsync(cupon);
-        public Task<int> DeleteCuponAsync(Cupon cupon) => _database.DeleteAsync(cupon);
 
         // Ingredient methods
         public Task<List<Ingredient>> GetIngredientsAsync() => _database.Table<Ingredient>().ToListAsync();
@@ -65,14 +58,6 @@ namespace PizzaAppMaui.Data
 
         }
 
-
-
-
-        // Member methods
-        public Task<List<Member>> GetMembersAsync() => _database.Table<Member>().ToListAsync();
-        public Task<Member> GetMemberAsync(int id) => _database.Table<Member>().Where(i => i.Id == id).FirstOrDefaultAsync();
-        public Task<int> SaveMemberAsync(Member member) => member.Id != 0 ? _database.UpdateAsync(member) : _database.InsertAsync(member);
-        public Task<int> DeleteMemberAsync(Member member) => _database.DeleteAsync(member);
 
         // Order methods
         public Task<List<Order>> GetOrdersAsync() => _database.Table<Order>().ToListAsync();
