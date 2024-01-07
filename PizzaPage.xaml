@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaAppMaui.PizzaPage"
+             Title="Add New Pizza">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20">
+                <Editor x:Name="pizzaNameEditor" Placeholder="Enter pizza name" Margin="20" HeightRequest="50" />
+                <Entry x:Name="basePriceEntry" Placeholder="Enter base price" Keyboard="Numeric" Margin="20" />
+
+                <Label Text="Select Ingredients:" Margin="20,10,20,0"/>
+                <CollectionView x:Name="ingredientsCollectionView" SelectionMode="Multiple" Margin="20" HeightRequest="150">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Name}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Button Text="Save Pizza" Clicked="OnSaveButtonClicked" Margin="20" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

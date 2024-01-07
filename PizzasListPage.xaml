@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaAppMaui.PizzasListPage"
+             Title="Pizzas List">
+
+    <StackLayout Orientation="Vertical" Padding="10">
+        <Button Text="Back" Clicked="OnBackButtonClicked" />
+        <ListView x:Name="pizzasListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" Padding="10">
+                            <Label Text="{Binding PizzaName}" FontAttributes="Bold" />
+                            <Label Text="{Binding BasePrice, StringFormat='Base Price: {0:C}'}" />
+                            <CollectionView ItemsSource="{Binding PizzaIngredients}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Ingredient.Name}" />
+                                            <Label Text="{Binding Quantity, StringFormat=' x {0}'}" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

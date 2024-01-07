@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaAppMaui.IngredientsListPage"
+             Title="Ingredients List">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- Back Button -->
+            <Button Text="Back" Clicked="OnBackButtonClicked" />
+
+            <!-- Ingredients List -->
+            <ListView x:Name="ingredientsListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" Detail="{Binding Price}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

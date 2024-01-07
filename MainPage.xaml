@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaAppMaui.MainPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Pizzas" Clicked="OnNavigateToPizzaPageClicked" />
+        <ToolbarItem Text="Ingredients" Clicked="OnNavigateToIngredientPageClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Label
+                Text="Welcome to our Pizza App!"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center" />
+
+            <Image
+                Source="pizza_image.jpg"
+                SemanticProperties.Description="Delicious pizza!"
+                HeightRequest="200"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="NavigateToPizzasListPageBtn"
+                Text="Go to Pizzas List Page"
+                Clicked="OnNavigateToPizzasListPageClicked"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="NavigateToIngredientsListPageBtn"
+                Text="Go to Ingredients List Page"
+                Clicked="OnNavigateToIngredientsListPageClicked"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
