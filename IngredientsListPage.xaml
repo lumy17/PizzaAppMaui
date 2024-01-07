@@ -6,17 +6,23 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <!-- Back Button -->
             <Button Text="Back" Clicked="OnBackButtonClicked" />
 
-            <!-- Ingredients List -->
             <ListView x:Name="ingredientsListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding Price}" />
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10">
+                                <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                <Label Text="{Binding Price, StringFormat='{0:C}'}" VerticalOptions="Center" />
+                                <Button Text="Delete" Clicked="OnDeleteIngredientClicked" CommandParameter="{Binding .}" />
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+
+

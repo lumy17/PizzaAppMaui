@@ -13,10 +13,10 @@ namespace PizzaAppMaui.Models
         //asa se modeleaza faptul ca o pizza poate fi inclusa in mai multe comenzi(pizzaorders). 
         //in acest caz atributul este optional deoarece o pizza poate sa nu sa fie inclusa intr-o comanda
 
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<PizzaOrder> PizzaOrders { get; set; }
+        [OneToMany]
+        public List<PizzaOrder>? PizzaOrders { get; set; }
 
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<PizzaIngredient> PizzaIngredients { get; set; }
+        [OneToMany]
+        public List<PizzaIngredient>? PizzaIngredients { get; set; }
     }
 }

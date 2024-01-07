@@ -14,7 +14,7 @@ namespace PizzaAppMaui.Models
         //Cascade Operations: CascadeOperations help define how changes
         //(like deletions) should propagate in related records.
 
-        [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public List<PizzaIngredient> PizzaIngredients { get; set; }
+        [OneToMany]
+        public List<PizzaIngredient>? PizzaIngredients { get; set; }
     }
 }

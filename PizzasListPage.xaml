@@ -10,9 +10,14 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Vertical" Padding="10">
+                        <StackLayout Orientation="Horizontal" Padding="10">
                             <Label Text="{Binding PizzaName}" FontAttributes="Bold" />
                             <Label Text="{Binding BasePrice, StringFormat='Base Price: {0:C}'}" />
+
+                            <!-- Delete Button -->
+                            <Button Text="Delete" Clicked="OnDeletePizzaClicked" CommandParameter="{Binding .}" />
+
+                            <!-- Ingredients CollectionView -->
                             <CollectionView ItemsSource="{Binding PizzaIngredients}">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
@@ -29,5 +34,4 @@
             </ListView.ItemTemplate>
         </ListView>
     </StackLayout>
-
 </ContentPage>

@@ -20,6 +20,16 @@ namespace PizzaAppMaui.Data
             _database.CreateTableAsync<PizzaOrder>().Wait();
         }
 
+        public async Task DeleteAllPizzasAsync()
+        {
+            // Delete all records from the Pizza table
+            await _database.ExecuteAsync("DELETE FROM Pizza");
+        }
+        public async Task DeleteAllIngredientsAsync()
+        {
+            // Delete all records from the Pizza table
+            await _database.ExecuteAsync("DELETE FROM Ingredient");
+        }
         // Cupon methods
         public Task<List<Cupon>> GetCuponsAsync() => _database.Table<Cupon>().ToListAsync();
         public Task<Cupon> GetCuponAsync(int id) => _database.Table<Cupon>().Where(i => i.Id == id).FirstOrDefaultAsync();
@@ -30,7 +40,33 @@ namespace PizzaAppMaui.Data
         public Task<List<Ingredient>> GetIngredientsAsync() => _database.Table<Ingredient>().ToListAsync();
         public Task<Ingredient> GetIngredientAsync(int id) => _database.Table<Ingredient>().Where(i => i.Id == id).FirstOrDefaultAsync();
         public Task<int> SaveIngredientAsync(Ingredient ingredient) => ingredient.Id != 0 ? _database.UpdateAsync(ingredient) : _database.InsertAsync(ingredient);
-        public Task<int> DeleteIngredientAsync(Ingredient ingredient) => _database.DeleteAsync(ingredient);
+        public async Task<int> DeleteIngredientAsync(Ingredient ingredient)
+        {
+            try
+            {
+                // First, delete related PizzaIngredient records
+                var relatedPizzaIngredients = await _database.Table<PizzaIngredient>()
+                                                             .Where(pi => pi.IngredientId == ingredient.Id)
+                                                             .ToListAsync();
+
+                foreach (var pizzaIngredient in relatedPizzaIngredients)
+                {
+                    await _database.DeleteAsync(pizzaIngredient);
+                }
+
+                // Then, delete the ingredient
+                return await _database.DeleteAsync(ingredient);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in DeleteIngredientAsync: {ex.Message}");
+                throw;
+            }
+
+        }
+
+
+
 
         // Member methods
         public Task<List<Member>> GetMembersAsync() => _database.Table<Member>().ToListAsync();
@@ -47,7 +83,21 @@ namespace PizzaAppMaui.Data
         // Pizza methods
         public Task<List<Pizza>> GetPizzasAsync() => _database.Table<Pizza>().ToListAsync();
         public Task<Pizza> GetPizzaAsync(int id) => _database.Table<Pizza>().Where(i => i.Id == id).FirstOrDefaultAsync();
-        public Task<int> SavePizzaAsync(Pizza pizza) => pizza.Id != 0 ? _database.UpdateAsync(pizza) : _database.InsertAsync(pizza);
+        public async Task<int> SavePizzaAsync(Pizza pizza)
+        {
+            // Save the pizza to the database
+            int rowsAffected = await _database.InsertAsync(pizza);
+
+            // For each PizzaIngredient, set the PizzaId and save it to the database
+            foreach (var pizzaIngredient in pizza.PizzaIngredients)
+            {
+                pizzaIngredient.PizzaId = pizza.Id;
+                rowsAffected += await _database.InsertAsync(pizzaIngredient);
+            }
+
+            return rowsAffected;
+        }
+
         public Task<int> DeletePizzaAsync(Pizza pizza) => _database.DeleteAsync(pizza);
 
         // PizzaIngredient methods
@@ -66,12 +116,17 @@ namespace PizzaAppMaui.Data
             var pizzas = await _database.Table<Pizza>().ToListAsync();
             foreach (var pizza in pizzas)
             {
-                pizza.PizzaIngredients = await _database.Table<PizzaIngredient>()
-                                                       .Where(pi => pi.PizzaId == pizza.Id)
-                                                       .ToListAsync();
+                var ingredients = await _database.Table<PizzaIngredient>()
+                                                 .Where(pi => pi.PizzaId == pizza.Id)
+                                                 .ToListAsync();
+                pizza.PizzaIngredients = ingredients;
+
+                // For diagnostic purposes:
+                Console.WriteLine($"Pizza: {pizza.PizzaName}, Ingredients Count: {ingredients.Count}");
             }
             return pizzas;
         }
+
 
     }
 }
